@@ -1,0 +1,245 @@
+<view class="container">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-text">正在加载基地信息...</view>
+  </view>
+
+  <!-- 错误状态 -->
+  <view wx:elif="{{error}}" class="error-container">
+    <view class="error-icon">⚠️</view>
+    <view class="error-text">加载失败</view>
+    <view class="error-desc">网络连接异常，请检查网络后重试</view>
+    <button class="btn-primary retry-btn" bindtap="retryLoad">重新加载</button>
+  </view>
+
+  <!-- 主要内容 -->
+  <view wx:else>
+    <!-- 基地图片轮播 -->
+    <swiper class="detail-banner" indicator-dots="true" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#dc143c" autoplay="true" interval="4000" circular="true">
+      <swiper-item wx:for="{{baseInfo.images}}" wx:key="index" wx:if="{{baseInfo.images && baseInfo.images.length > 0}}">
+        <image src="{{item.url}}" class="banner-image" mode="aspectFill" bindtap="previewImage" data-index="{{index}}"></image>
+      </swiper-item>
+      <swiper-item wx:if="{{!baseInfo.images || baseInfo.images.length === 0}}">
+        <view class="default-banner">
+          <text class="default-banner-icon">🏛️</text>
+          <text class="default-banner-text">{{baseInfo.name}}</text>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <!-- 返回按钮 -->
+    <view class="back-btn" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+
+    <!-- 基地基本信息 -->
+    <view class="base-header">
+      <view class="header-top">
+        <view class="base-name">{{baseInfo.name}}</view>
+        <view class="base-rating">
+          <text class="rating-text">⭐ {{baseInfo.rating || '4.5'}}</text>
+          <text class="visit-count">{{baseInfo.visitCount || '1000+'}}人参观</text>
+        </view>
+      </view>
+      
+      <view class="base-location">
+        <text class="location-icon">📍</text>
+        <text class="location-text">{{baseInfo.address || '地址信息加载中...'}}</text>
+        <view class="location-actions">
+          <button class="btn-location" bindtap="openMap">导航</button>
+          <button class="btn-location" bindtap="copyAddress">复制</button>
+        </view>
+      </view>
+
+      <view class="base-tags">
+        <text class="tag">{{baseInfo.province || '北京'}}</text>
+        <text class="tag">红色基地</text>
+        <text class="tag">爱国主义教育</text>
+      </view>
+    </view>
+
+    <!-- 快捷操作 -->
+    <view class="quick-operations">
+      <view class="operation-item" bindtap="makeCall">
+        <view class="operation-icon" style="background: linear-gradient(135deg, #26de81, #20bf6b);">📞</view>
+        <text class="operation-text">电话咨询</text>
+      </view>
+      <view class="operation-item" bindtap="shareBase">
+        <view class="operation-icon" style="background: linear-gradient(135deg, #74b9ff, #0984e3);">📤</view>
+        <text class="operation-text">分享</text>
+      </view>
+      <view class="operation-item" bindtap="collectBase">
+        <view class="operation-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">{{isCollected ? '💖' : '🤍'}}</view>
+        <text class="operation-text">{{isCollected ? '已收藏' : '收藏'}}</text>
+      </view>
+      <view class="operation-item" bindtap="goToBooking">
+        <view class="operation-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">🎫</view>
+        <text class="operation-text">立即预约</text>
+      </view>
+    </view>
+
+    <!-- 详细信息 -->
+    <view class="detail-sections">
+      <!-- 基地介绍 -->
+      <view class="detail-section">
+        <view class="section-title">
+          <text class="title-icon">📖</text>
+          <text class="title-text">基地介绍</text>
+        </view>
+        <view class="section-content">
+          <text wx:if="{{baseInfo.description}}" class="description-text">{{baseInfo.description}}</text>
+          <text wx:if="{{baseInfo.introduction}}" class="introduction-text">{{baseInfo.introduction}}</text>
+          <view wx:if="{{!baseInfo.description && !baseInfo.introduction}}" class="empty-state">
+            <text class="empty-icon">📝</text>
+            <text class="empty-text">暂无详细介绍</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 照片展示区域 -->
+      <view class="detail-section">
+        <view class="section-title">
+          <text class="title-icon">📷</text>
+          <text class="title-text">基地照片</text>
+          <text class="photo-count">({{photoGallery.length}}张)</text>
+        </view>
+        <view class="section-content">
+          <!-- 照片分类标签 -->
+          <view class="photo-categories" wx:if="{{photoGallery.length > 0}}">
+            <view wx:for="{{photoCategories}}" wx:key="type" 
+                  class="category-tag {{selectedPhotoCategory === item.type ? 'active' : ''}}"
+                  bindtap="selectPhotoCategory"
+                  data-type="{{item.type}}">
+              <text class="category-name">{{item.name}}</text>
+              <text class="category-count">({{item.count}})</text>
+            </view>
+          </view>
+
+          <!-- 照片网格 -->
+          <view class="photo-grid" wx:if="{{filteredPhotos.length > 0}}">
+            <view wx:for="{{filteredPhotos}}" wx:key="index" 
+                  class="photo-item"
+                  bindtap="previewPhoto"
+                  data-index="{{item.originalIndex}}">
+              <image src="{{item.url}}" class="photo-image" mode="aspectFill"></image>
+              <view class="photo-overlay">
+                <text class="photo-title">{{item.title}}</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 空状态 -->
+          <view wx:if="{{photoGallery.length === 0}}" class="empty-state">
+            <text class="empty-icon">📷</text>
+            <text class="empty-text">暂无基地照片</text>
+          </view>
+
+          <!-- 查看更多按钮 -->
+          <view class="photo-actions" wx:if="{{photoGallery.length > 6}}">
+            <button class="btn-secondary photo-btn" bindtap="toggleShowAllPhotos">
+              {{showAllPhotos ? '收起照片' : '查看全部' + photoGallery.length + '张照片'}}
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <!-- 参观信息 -->
+      <view class="detail-section">
+        <view class="section-title">
+          <text class="title-icon">ℹ️</text>
+          <text class="title-text">参观信息</text>
+        </view>
+        <view class="section-content">
+          <view class="info-item">
+            <text class="info-label">🎫 门票信息：</text>
+            <text class="info-value">{{baseInfo.ticketInfo || '免费开放'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">⏰ 开放时间：</text>
+            <text class="info-value">{{baseInfo.openTime || '09:00-17:00'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">📞 联系电话：</text>
+            <text class="info-value phone-number" bindtap="makeCall">{{baseInfo.phone || '暂无'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 预约购票 -->
+      <view class="detail-section">
+        <view class="section-title">
+          <text class="title-icon">🎫</text>
+          <text class="title-text">预约购票</text>
+        </view>
+        <view class="section-content">
+          <view class="booking-info">
+            <view class="booking-item">
+              <text class="booking-label">🌐 预约网站：</text>
+              <text class="booking-value">{{baseInfo.bookingUrl || '无需预约'}}</text>
+            </view>
+            <view class="booking-item">
+              <text class="booking-label">📱 预约方式：</text>
+              <text class="booking-value">{{baseInfo.bookingMethod || '现场排队'}}</text>
+            </view>
+          </view>
+          <view class="booking-buttons">
+            <button class="btn-primary booking-btn" bindtap="goToBooking">立即预约</button>
+            <button class="btn-secondary booking-btn" bindtap="copyBookingUrl">复制链接</button>
+          </view>
+        </view>
+      </view>
+
+      <!-- 交通指南 -->
+      <view class="detail-section">
+        <view class="section-title">
+          <text class="title-icon">🚗</text>
+          <text class="title-text">交通指南</text>
+        </view>
+        <view class="section-content">
+          <view class="transport-item">
+            <text class="transport-icon">🚇</text>
+            <text class="transport-text">地铁：查看附近地铁站点</text>
+          </view>
+          <view class="transport-item">
+            <text class="transport-icon">🚌</text>
+            <text class="transport-text">公交：查看公交路线</text>
+          </view>
+          <view class="transport-item">
+            <text class="transport-icon">🚗</text>
+            <text class="transport-text">自驾：点击导航获取路线</text>
+          </view>
+          <button class="btn-primary" bindtap="openMap">打开地图导航</button>
+        </view>
+      </view>
+
+      <!-- 周边推荐 -->
+      <view class="detail-section">
+        <view class="section-title">
+          <text class="title-icon">🏛️</text>
+          <text class="title-text">周边推荐</text>
+        </view>
+        <view class="section-content">
+          <scroll-view class="nearby-bases" scroll-x="true" show-scrollbar="false" wx:if="{{nearbyBases.length > 0}}">
+            <view wx:for="{{nearbyBases}}" wx:key="id" class="nearby-card" bindtap="goToNearbyDetail" data-id="{{item.id}}">
+              <view class="nearby-image">
+                <image wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0].url}}" mode="aspectFill" class="nearby-img"></image>
+                <view wx:else class="nearby-default">🏛️</view>
+              </view>
+              <text class="nearby-name">{{item.name}}</text>
+              <text class="nearby-distance">{{item.distance || '1.2'}}km</text>
+            </view>
+          </scroll-view>
+          <view wx:if="{{nearbyBases.length === 0}}" class="empty-state">
+            <text class="empty-icon">🏛️</text>
+            <text class="empty-text">暂无周边推荐</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部预约按钮 -->
+    <view class="bottom-actions">
+      <button class="btn-primary bottom-btn" bindtap="goToBooking">立即预约参观</button>
+    </view>
+  </view>
+</view>

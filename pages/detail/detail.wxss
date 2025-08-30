@@ -1,0 +1,608 @@
+/* 基地详情页样式 */
+
+/* 轮播图样式 */
+.detail-banner {
+  width: 100%;
+  height: 500rpx;
+  position: relative;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+}
+
+.default-banner {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #dc143c, #ff4757);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.default-banner-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+}
+
+.default-banner-text {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+/* 返回按钮 */
+.back-btn {
+  position: absolute;
+  top: 60rpx;
+  left: 30rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.back-icon {
+  color: white;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+/* 基地基本信息 */
+.base-header {
+  background: white;
+  padding: 40rpx 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.header-top {
+  margin-bottom: 30rpx;
+}
+
+.base-name {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  line-height: 1.4;
+}
+
+.base-rating {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.rating-text {
+  font-size: 28rpx;
+  color: #ff6b35;
+  font-weight: 600;
+}
+
+.visit-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.base-location {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 16rpx;
+}
+
+.location-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.location-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.5;
+}
+
+.location-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.btn-location {
+  padding: 12rpx 24rpx;
+  background: #dc143c;
+  color: white;
+  border-radius: 50rpx;
+  font-size: 24rpx;
+  border: none;
+  min-width: 80rpx;
+}
+
+.base-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.tag {
+  padding: 12rpx 24rpx;
+  background: #f0f0f0;
+  color: #666;
+  font-size: 24rpx;
+  border-radius: 50rpx;
+}
+
+/* 快捷操作 */
+.quick-operations {
+  background: white;
+  padding: 40rpx 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-around;
+}
+
+.operation-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.operation-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: white;
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.15);
+}
+
+.operation-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 详细信息区域 */
+.detail-sections {
+  background: white;
+  border-radius: 24rpx 24rpx 0 0;
+  margin-top: -20rpx;
+  position: relative;
+  z-index: 10;
+  padding: 40rpx 30rpx;
+  min-height: 100vh;
+}
+
+.detail-section {
+  margin-bottom: 60rpx;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.title-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.title-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.section-content {
+  line-height: 1.8;
+}
+
+.description-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.8;
+  margin-bottom: 20rpx;
+}
+
+.introduction-text {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+}
+
+/* 照片展示区域 */
+.photo-count {
+  margin-left: 12rpx;
+  font-size: 24rpx;
+  color: #999;
+  font-weight: normal;
+}
+
+.photo-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.category-tag {
+  padding: 12rpx 24rpx;
+  background: #f8f9fa;
+  border-radius: 50rpx;
+  font-size: 24rpx;
+  color: #666;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.category-tag.active {
+  background: #dc143c;
+  color: white;
+}
+
+.category-name {
+  margin-right: 8rpx;
+}
+
+.category-count {
+  font-size: 20rpx;
+  opacity: 0.8;
+}
+
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 30rpx;
+}
+
+.photo-item {
+  width: calc(33.333% - 8rpx);
+  height: 200rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.photo-item:active {
+  transform: scale(0.95);
+}
+
+.photo-image {
+  width: 100%;
+  height: 100%;
+}
+
+.photo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 30rpx 16rpx 16rpx;
+  color: white;
+  transform: translateY(100%);
+  transition: all 0.3s ease;
+}
+
+.photo-item:active .photo-overlay {
+  transform: translateY(0);
+}
+
+.photo-title {
+  font-size: 22rpx;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.photo-actions {
+  text-align: center;
+}
+
+.photo-btn {
+  padding: 20rpx 48rpx;
+  border-radius: 50rpx;
+  font-size: 26rpx;
+}
+
+/* 参观信息 */
+.info-item {
+  display: flex;
+  margin-bottom: 24rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 600;
+  min-width: 160rpx;
+}
+
+.info-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.phone-number {
+  color: #dc143c;
+  text-decoration: underline;
+}
+
+/* 预约购票 */
+.booking-info {
+  margin-bottom: 30rpx;
+}
+
+.booking-item {
+  display: flex;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.booking-label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 600;
+  min-width: 160rpx;
+}
+
+.booking-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.booking-buttons {
+  display: flex;
+  gap: 20rpx;
+}
+
+.booking-btn {
+  flex: 1;
+  padding: 24rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+}
+
+/* 交通指南 */
+.transport-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.transport-icon {
+  font-size: 32rpx;
+  margin-right: 20rpx;
+}
+
+.transport-text {
+  font-size: 28rpx;
+  color: #333;
+  flex: 1;
+}
+
+/* 周边推荐 */
+.nearby-bases {
+  white-space: nowrap;
+  padding: 20rpx 0;
+}
+
+.nearby-card {
+  display: inline-block;
+  width: 240rpx;
+  margin-right: 20rpx;
+  background: white;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.nearby-card:active {
+  transform: scale(0.95);
+}
+
+.nearby-image {
+  width: 100%;
+  height: 160rpx;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nearby-img {
+  width: 100%;
+  height: 100%;
+}
+
+.nearby-default {
+  font-size: 60rpx;
+  color: #ccc;
+}
+
+.nearby-name {
+  display: block;
+  padding: 16rpx 20rpx 8rpx;
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nearby-distance {
+  display: block;
+  padding: 0 20rpx 16rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 底部操作按钮 */
+.bottom-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 20rpx 30rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.bottom-btn {
+  width: 100%;
+  padding: 28rpx;
+  border-radius: 50rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+/* 响应式设计 */
+@media (min-width: 768rpx) {
+  .photo-item {
+    width: calc(25% - 9rpx);
+  }
+  
+  .nearby-card {
+    width: 280rpx;
+  }
+}
+
+@media (min-width: 1024rpx) {
+  .photo-item {
+    width: calc(20% - 9.6rpx);
+  }
+  
+  .nearby-card {
+    width: 320rpx;
+  }
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400rpx;
+}
+
+.loading-text {
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 错误状态 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400rpx;
+  padding: 40rpx;
+}
+
+.error-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.7;
+}
+
+.error-text {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+}
+
+.error-desc {
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+}
+
+.retry-btn {
+  padding: 20rpx 40rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 100rpx 40rpx;
+  color: #999;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+}
+
+/* 动画效果 */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

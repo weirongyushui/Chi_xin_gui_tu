@@ -1,0 +1,178 @@
+<view class="container">
+  <!-- 用户头部 -->
+  <view class="user-header">
+    <view class="user-avatar" bindtap="chooseAvatar">
+      <image wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" class="avatar-image"></image>
+      <text wx:else class="avatar-placeholder">👤</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{userInfo.nickName || '点击登录'}}</text>
+      <text class="user-location" wx:if="{{userLocation}}">📍 {{userLocation}}</text>
+      <text class="user-tips" wx:else>点击头像登录获取更多功能</text>
+    </view>
+    <view class="user-actions">
+      <button wx:if="{{!userInfo.nickName}}" class="btn-login" bindtap="login">登录</button>
+      <view wx:else class="user-badges">
+        <text class="badge">红色传承者</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据统计 -->
+  <view class="stats-section">
+    <view class="stat-item">
+      <text class="stat-number">{{visitedCount}}</text>
+      <text class="stat-label">已参观</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-number">{{collectedCount}}</text>
+      <text class="stat-label">已收藏</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-number">{{bookingCount}}</text>
+      <text class="stat-label">预约中</text>
+    </view>
+  </view>
+
+  <!-- 快捷功能 -->
+  <view class="quick-functions">
+    <view class="function-row">
+      <view class="function-item" bindtap="goToBookings">
+        <view class="function-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+          <text class="icon">🎫</text>
+        </view>
+        <text class="function-text">我的预约</text>
+        <text class="function-arrow">></text>
+      </view>
+      
+      <view class="function-item" bindtap="goToCollections">
+        <view class="function-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+          <text class="icon">💖</text>
+        </view>
+        <text class="function-text">我的收藏</text>
+        <text class="function-arrow">></text>
+      </view>
+    </view>
+
+    <view class="function-row">
+      <view class="function-item" bindtap="goToHistory">
+        <view class="function-icon" style="background: linear-gradient(135deg, #74b9ff, #0984e3);">
+          <text class="icon">📚</text>
+        </view>
+        <text class="function-text">参观记录</text>
+        <text class="function-arrow">></text>
+      </view>
+      
+      <view class="function-item" bindtap="shareApp">
+        <view class="function-icon" style="background: linear-gradient(135deg, #26de81, #20bf6b);">
+          <text class="icon">📤</text>
+        </view>
+        <text class="function-text">分享推荐</text>
+        <text class="function-arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 服务功能 -->
+  <view class="service-section">
+    <view class="section-title">
+      <text class="title-icon">⚙️</text>
+      <text class="title-text">服务中心</text>
+    </view>
+    
+    <view class="service-list">
+      <view class="service-item" bindtap="contactService">
+        <view class="service-info">
+          <text class="service-name">在线客服</text>
+          <text class="service-desc">咨询预约、投诉建议</text>
+        </view>
+        <text class="service-arrow">></text>
+      </view>
+      
+      <view class="service-item" bindtap="showFeedback">
+        <view class="service-info">
+          <text class="service-name">意见反馈</text>
+          <text class="service-desc">您的建议让我们更好</text>
+        </view>
+        <text class="service-arrow">></text>
+      </view>
+      
+      <view class="service-item" bindtap="showAbout">
+        <view class="service-info">
+          <text class="service-name">关于我们</text>
+          <text class="service-desc">了解红色基地票务平台</text>
+        </view>
+        <text class="service-arrow">></text>
+      </view>
+      
+      <view class="service-item" bindtap="showSettings">
+        <view class="service-info">
+          <text class="service-name">设置</text>
+          <text class="service-desc">账号安全、隐私设置</text>
+        </view>
+        <text class="service-arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学习园地 -->
+  <view class="study-section">
+    <view class="section-title">
+      <text class="title-icon">📖</text>
+      <text class="title-text">学习园地</text>
+    </view>
+    
+    <view class="study-cards">
+      <view class="study-card red" bindtap="showPartyHistory">
+        <view class="study-content">
+          <text class="study-title">党史学习</text>
+          <text class="study-subtitle">了解党的光辉历程</text>
+        </view>
+        <text class="study-icon">🚩</text>
+      </view>
+      
+      <view class="study-card blue" bindtap="showRedStories">
+        <view class="study-content">
+          <text class="study-title">红色故事</text>
+          <text class="study-subtitle">聆听革命先烈事迹</text>
+        </view>
+        <text class="study-icon">📚</text>
+      </view>
+      
+      <view class="study-card green" bindtap="showQuiz">
+        <view class="study-content">
+          <text class="study-title">知识问答</text>
+          <text class="study-subtitle">测试党史知识掌握</text>
+        </view>
+        <text class="study-icon">🎯</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近浏览 -->
+  <view class="recent-section" wx:if="{{recentBases.length > 0}}">
+    <view class="section-title">
+      <text class="title-icon">👁️</text>
+      <text class="title-text">最近浏览</text>
+      <text class="title-action" bindtap="clearRecent">清空</text>
+    </view>
+    
+    <scroll-view class="recent-scroll" scroll-x="true" show-scrollbar="false">
+      <view wx:for="{{recentBases}}" wx:key="id" class="recent-item" bindtap="goToDetail" data-id="{{item.id}}">
+        <view class="recent-image">
+          <image wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" mode="aspectFill" class="recent-img"></image>
+          <view wx:else class="recent-default">🏛️</view>
+        </view>
+        <text class="recent-name">{{item.name}}</text>
+        <text class="recent-province">{{item.province}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section" wx:if="{{userInfo.nickName}}">
+    <button class="btn-logout" bindtap="logout">退出登录</button>
+  </view>
+</view>

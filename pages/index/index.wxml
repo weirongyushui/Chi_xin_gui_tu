@@ -1,0 +1,135 @@
+<view class="container">
+  <!-- 头部轮播图 -->
+  <swiper class="header-banner" indicator-dots="true" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#dc143c" autoplay="true" interval="4000" circular="true">
+    <swiper-item class="banner-item" style="background: linear-gradient(135deg, #dc143c, #ff4757);">
+      <view class="banner-content">
+        <text class="banner-title">探寻红色足迹</text>
+        <text class="banner-subtitle">传承革命精神</text>
+      </view>
+    </swiper-item>
+    <swiper-item class="banner-item" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+      <view class="banner-content">
+        <text class="banner-title">红色基地导览</text>
+        <text class="banner-subtitle">一键预约参观</text>
+      </view>
+    </swiper-item>
+    <swiper-item class="banner-item" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+      <view class="banner-content">
+        <text class="banner-title">党史学习教育</text>
+        <text class="banner-subtitle">不忘初心使命</text>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <!-- 当前位置和搜索 -->
+  <view class="location-section">
+    <view class="location-info" bindtap="getLocation">
+      <text class="location-icon">📍</text>
+      <text class="location-text">{{userCity || '点击定位'}}</text>
+      <text class="location-arrow">></text>
+    </view>
+    <view class="search-box" bindtap="goToSearch">
+      <text class="search-icon">🔍</text>
+      <text class="search-placeholder">搜索红色基地</text>
+    </view>
+  </view>
+
+  <!-- 快捷功能 -->
+  <view class="quick-actions">
+    <view class="action-item" bindtap="goToMap">
+      <view class="action-icon" style="background: linear-gradient(135deg, #74b9ff, #0984e3);">🗺️</view>
+      <text class="action-text">地图导览</text>
+    </view>
+    <view class="action-item" bindtap="goToList">
+      <view class="action-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">📍</view>
+      <text class="action-text">全部基地</text>
+    </view>
+
+    <view class="action-item" bindtap="goToRoute">
+      <view class="action-icon" style="background: linear-gradient(135deg, #26de81, #20bf6b);">🚗</view>
+      <text class="action-text">路线规划</text>
+    </view>
+  </view>
+
+  <!-- 推荐基地 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">{{userCity ? userCity + '推荐' : '热门推荐'}}</text>
+      <text class="section-more" bindtap="goToList">查看全部</text>
+    </view>
+    
+    <view wx:if="{{loading}}" class="loading">
+      <loading></loading>
+      <text class="loading-text">正在加载...</text>
+    </view>
+    
+    <view wx:elif="{{recommendedBases.length === 0}}" class="empty-state">
+      <view class="empty-icon">📍</view>
+      <text>暂无推荐基地</text>
+      <view class="mt-20">
+        <button class="btn-primary" bindtap="goToList">浏览全部基地</button>
+      </view>
+    </view>
+    
+    <view wx:else class="bases-list">
+      <view wx:for="{{recommendedBases}}" wx:key="id" class="base-card" bindtap="goToDetail" data-id="{{item.id}}">
+        <view class="base-image">
+          <image wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" mode="aspectFill" class="card-image"></image>
+          <view wx:else class="default-image">
+            <text class="default-icon">🏛️</text>
+          </view>
+          <view class="image-overlay">
+            <text class="rating">⭐ {{item.rating}}</text>
+          </view>
+        </view>
+        <view class="base-info">
+          <text class="base-name">{{item.name}}</text>
+          <text class="base-address">📍 {{item.address}}</text>
+          <view class="base-meta">
+            <text class="visit-count">👥 {{item.visitCount}}人参观</text>
+            <text class="distance" wx:if="{{item.distance}}">📏 {{item.distance}}km</text>
+          </view>
+          <text class="base-desc">{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 热门基地 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">🔥 热门基地</text>
+      <text class="section-more" bindtap="goToList">查看全部</text>
+    </view>
+    
+    <scroll-view class="hot-bases" scroll-x="true" show-scrollbar="false">
+      <view wx:for="{{hotBases}}" wx:key="id" class="hot-base-card" bindtap="goToDetail" data-id="{{item.id}}">
+        <view class="hot-base-image">
+          <image wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" mode="aspectFill" class="hot-card-image"></image>
+          <view wx:else class="hot-default-image">
+            <text class="hot-default-icon">🏛️</text>
+          </view>
+        </view>
+        <text class="hot-base-name">{{item.name}}</text>
+        <text class="hot-base-city">{{item.city}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 党史学习 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">📚 党史学习</text>
+    </view>
+    <view class="study-cards">
+      <view class="study-card" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+        <text class="study-title">党的历史</text>
+        <text class="study-subtitle">了解党的光辉历程</text>
+      </view>
+      <view class="study-card" style="background: linear-gradient(135deg, #74b9ff, #0984e3);">
+        <text class="study-title">红色故事</text>
+        <text class="study-subtitle">聆听革命先烈事迹</text>
+      </view>
+    </view>
+  </view>
+</view>

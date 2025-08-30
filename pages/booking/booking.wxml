@@ -1,0 +1,124 @@
+<view class="container">
+  <!-- 基地信息卡片 -->
+  <view class="base-info-card" wx:if="{{baseInfo.id}}">
+    <image wx:if="{{baseInfo.images && baseInfo.images.length > 0}}" src="{{baseInfo.images[0]}}" class="base-image" mode="aspectFill"></image>
+    <view wx:else class="base-default-image">
+      <text class="default-icon">🏛️</text>
+    </view>
+    <view class="base-info">
+      <text class="base-name">{{baseInfo.name}}</text>
+      <text class="base-address">📍 {{baseInfo.address}}</text>
+      <text class="base-ticket">🎫 {{baseInfo.ticketInfo}}</text>
+      <text class="base-time">⏰ {{baseInfo.openTime}}</text>
+    </view>
+  </view>
+
+  <!-- 预约表单 -->
+  <view class="booking-form">
+    <view class="form-title">预约信息</view>
+    
+    <!-- 参观日期 -->
+    <view class="form-item">
+      <text class="form-label">参观日期</text>
+      <picker mode="date" value="{{visitDate}}" start="{{today}}" end="{{maxDate}}" bindchange="onDateChange">
+        <view class="picker-input">
+          <text class="{{visitDate ? '' : 'placeholder'}}">{{visitDate || '请选择参观日期'}}</text>
+          <text class="picker-arrow">></text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 参观时段 -->
+    <view class="form-item">
+      <text class="form-label">参观时段</text>
+      <view class="time-slots">
+        <view wx:for="{{timeSlots}}" wx:key="index" class="time-slot {{selectedTimeSlot === index ? 'active' : ''}}" bindtap="selectTimeSlot" data-index="{{index}}">
+          <text class="slot-time">{{item.time}}</text>
+          <text class="slot-status">{{item.available ? '可预约' : '已满'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 参观人数 -->
+    <view class="form-item">
+      <text class="form-label">参观人数</text>
+      <view class="number-selector">
+        <view class="number-btn {{visitorCount <= 1 ? 'disabled' : ''}}" bindtap="decreaseCount">-</view>
+        <text class="number-value">{{visitorCount}}</text>
+        <view class="number-btn {{visitorCount >= 10 ? 'disabled' : ''}}" bindtap="increaseCount">+</view>
+      </view>
+    </view>
+
+    <!-- 联系人信息 -->
+    <view class="form-item">
+      <text class="form-label">联系人姓名</text>
+      <input class="form-input" placeholder="请输入联系人姓名" value="{{contactName}}" bindinput="onContactNameInput" maxlength="20"></input>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">联系电话</text>
+      <input class="form-input" placeholder="请输入联系电话" value="{{contactPhone}}" bindinput="onContactPhoneInput" type="number" maxlength="11"></input>
+    </view>
+
+    <!-- 身份证号 -->
+    <view class="form-item">
+      <text class="form-label">身份证号</text>
+      <input class="form-input" placeholder="请输入身份证号码" value="{{idNumber}}" bindinput="onIdNumberInput" maxlength="18"></input>
+    </view>
+
+    <!-- 特殊需求 -->
+    <view class="form-item">
+      <text class="form-label">特殊需求</text>
+      <textarea class="form-textarea" placeholder="如需轮椅通道、儿童座椅等，请在此说明" value="{{specialNeeds}}" bindinput="onSpecialNeedsInput" maxlength="200"></textarea>
+    </view>
+  </view>
+
+  <!-- 预约须知 -->
+  <view class="notice-section">
+    <view class="notice-title">预约须知</view>
+    <view class="notice-content">
+      <view class="notice-item">• 请提前1-3天进行预约，当日不接受预约</view>
+      <view class="notice-item">• 参观时请携带有效身份证件</view>
+      <view class="notice-item">• 请按预约时间准时到达，逾期视为自动取消</view>
+      <view class="notice-item">• 参观期间请遵守场馆规定，爱护文物</view>
+      <view class="notice-item">• 如需取消预约，请提前1天联系场馆</view>
+      <view class="notice-item">• 疫情期间请配合测温和健康码检查</view>
+    </view>
+  </view>
+
+  <!-- 预约协议 -->
+  <view class="agreement-section">
+    <view class="agreement-checkbox" bindtap="toggleAgreement">
+      <text class="checkbox {{isAgreed ? 'checked' : ''}}">{{isAgreed ? '✓' : ''}}</text>
+      <text class="agreement-text">我已阅读并同意</text>
+      <text class="agreement-link">《参观预约协议》</text>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button class="btn-submit {{canSubmit ? '' : 'disabled'}}" bindtap="submitBooking" disabled="{{!canSubmit}}">
+      {{submitLoading ? '提交中...' : '确认预约'}}
+    </button>
+  </view>
+
+  <!-- 我的预约记录 -->
+  <view class="my-bookings" wx:if="{{bookingHistory.length > 0}}">
+    <view class="section-title">我的预约记录</view>
+    <view wx:for="{{bookingHistory}}" wx:key="id" class="booking-record">
+      <view class="record-header">
+        <text class="record-base">{{item.baseName}}</text>
+        <text class="record-status status-{{item.status}}">{{item.statusText}}</text>
+      </view>
+      <view class="record-info">
+        <text class="record-date">参观日期：{{item.visitDate}}</text>
+        <text class="record-time">时间：{{item.timeSlot}}</text>
+        <text class="record-count">人数：{{item.visitorCount}}人</text>
+      </view>
+      <view class="record-actions" wx:if="{{item.status === 'confirmed'}}">
+        <button class="btn-secondary small" bindtap="cancelBooking" data-id="{{item.id}}">取消预约</button>
+        <button class="btn-primary small" bindtap="viewTicket" data-id="{{item.id}}">查看票据</button>
+      </view>
+    </view>
+  </view>
+</view>

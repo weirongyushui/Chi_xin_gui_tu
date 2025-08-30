@@ -1,0 +1,133 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-section">
+    <view class="search-bar">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索红色基地" value="{{searchKeyword}}" bindinput="onSearchInput" confirm-type="search" bindconfirm="onSearch"></input>
+      <view class="search-btn" bindtap="onSearch" wx:if="{{searchKeyword}}">搜索</view>
+    </view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-section">
+    <scroll-view class="filter-scroll" scroll-x="true" show-scrollbar="false">
+      <view class="filter-item {{selectedProvince === '' ? 'active' : ''}}" bindtap="selectProvince" data-province="">
+        全部
+      </view>
+      <view wx:for="{{provinces}}" wx:key="*this" class="filter-item {{selectedProvince === item ? 'active' : ''}}" bindtap="selectProvince" data-province="{{item}}">
+        {{item}}
+      </view>
+    </scroll-view>
+    
+    <view class="sort-section">
+      <text class="sort-label">排序：</text>
+      <picker bindchange="onSortChange" value="{{sortIndex}}" range="{{sortOptions}}" range-key="label">
+        <view class="sort-picker">
+          <text>{{sortOptions[sortIndex].label}}</text>
+          <text class="sort-arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 基地列表 -->
+  <view class="bases-container">
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading-section">
+      <loading></loading>
+      <text class="loading-text">正在加载...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:elif="{{filteredBases.length === 0}}" class="empty-section">
+      <view class="empty-icon">📍</view>
+      <text class="empty-text">{{searchKeyword ? '未找到相关基地' : '暂无红色基地'}}</text>
+      <view class="empty-actions" wx:if="{{searchKeyword || selectedProvince}}">
+        <button class="btn-secondary" bindtap="clearFilters">清除筛选</button>
+      </view>
+    </view>
+
+    <!-- 基地列表 -->
+    <view wx:else class="bases-list">
+      <view class="list-header">
+        <text class="result-count">共找到 {{filteredBases.length}} 个红色基地</text>
+        <view class="view-mode">
+          <text class="mode-btn {{viewMode === 'list' ? 'active' : ''}}" bindtap="switchViewMode" data-mode="list">📋</text>
+          <text class="mode-btn {{viewMode === 'grid' ? 'active' : ''}}" bindtap="switchViewMode" data-mode="grid">⊞</text>
+        </view>
+      </view>
+
+      <!-- 列表视图 -->
+      <view wx:if="{{viewMode === 'list'}}" class="list-view">
+        <view wx:for="{{filteredBases}}" wx:key="id" class="base-item" bindtap="goToDetail" data-id="{{item.id}}">
+          <view class="base-image-container">
+            <image wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" class="base-image" mode="aspectFill"></image>
+            <view wx:else class="base-default-image">
+              <text class="default-icon">🏛️</text>
+            </view>
+            <view class="image-badges">
+              <text class="rating-badge">⭐ {{item.rating}}</text>
+            </view>
+          </view>
+          
+          <view class="base-content">
+            <view class="base-header">
+              <text class="base-name">{{item.name}}</text>
+              <text class="base-province">{{item.province}}</text>
+            </view>
+            
+            <text class="base-address">📍 {{item.address}}</text>
+            <text class="base-description">{{item.description}}</text>
+            
+            <view class="base-meta">
+              <text class="visit-count">👥 {{item.visitCount}}人参观</text>
+              <text class="ticket-info">🎫 {{item.ticketInfo}}</text>
+            </view>
+            
+            <view class="base-actions">
+              <view class="action-btn" bindtap="makeCall" data-phone="{{item.phone}}" catchtap="true">
+                <text class="action-icon">📞</text>
+                <text class="action-text">咨询</text>
+              </view>
+              <view class="action-btn" bindtap="openMap" data-item="{{item}}" catchtap="true">
+                <text class="action-icon">🗺️</text>
+                <text class="action-text">导航</text>
+              </view>
+              <view class="action-btn primary" bindtap="goToBooking" data-id="{{item.id}}" catchtap="true">
+                <text class="action-icon">🎫</text>
+                <text class="action-text">预约</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 网格视图 -->
+      <view wx:else class="grid-view">
+        <view wx:for="{{filteredBases}}" wx:key="id" class="grid-item" bindtap="goToDetail" data-id="{{item.id}}">
+          <view class="grid-image-container">
+            <image wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" class="grid-image" mode="aspectFill"></image>
+            <view wx:else class="grid-default-image">
+              <text class="grid-default-icon">🏛️</text>
+            </view>
+            <view class="grid-badges">
+              <text class="grid-rating">⭐ {{item.rating}}</text>
+            </view>
+          </view>
+          
+          <view class="grid-content">
+            <text class="grid-name">{{item.name}}</text>
+            <text class="grid-province">{{item.province}} {{item.city}}</text>
+            <text class="grid-visit-count">👥 {{item.visitCount}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快速定位 -->
+  <view class="quick-location" bindtap="scrollToUserLocation" wx:if="{{userProvince && filteredBases.length > 0}}">
+    <text class="location-icon">📍</text>
+    <text class="location-text">{{userProvince}}</text>
+  </view>
+</view>

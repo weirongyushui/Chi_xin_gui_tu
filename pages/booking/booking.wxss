@@ -1,0 +1,398 @@
+.container {
+    padding: 30rpx;
+    background: #f5f5f5;
+    min-height: 100vh;
+  }
+  
+  /* 基地信息卡片 */
+  .base-info-card {
+    background: white;
+    border-radius: 20rpx;
+    padding: 30rpx;
+    margin-bottom: 30rpx;
+    display: flex;
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  }
+  
+  .base-image {
+    width: 160rpx;
+    height: 120rpx;
+    border-radius: 12rpx;
+    margin-right: 24rpx;
+  }
+  
+  .base-default-image {
+    width: 160rpx;
+    height: 120rpx;
+    border-radius: 12rpx;
+    margin-right: 24rpx;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .default-icon {
+    font-size: 60rpx;
+    color: #ccc;
+  }
+  
+  .base-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .base-name {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 12rpx;
+  }
+  
+  .base-address, .base-ticket, .base-time {
+    font-size: 24rpx;
+    color: #666;
+    margin-bottom: 8rpx;
+    line-height: 1.4;
+  }
+  
+  /* 预约表单 */
+  .booking-form {
+    background: white;
+    border-radius: 20rpx;
+    padding: 40rpx 30rpx;
+    margin-bottom: 30rpx;
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-title {
+    font-size: 36rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 40rpx;
+    text-align: center;
+  }
+  
+  .form-item {
+    margin-bottom: 40rpx;
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 28rpx;
+    color: #333;
+    margin-bottom: 20rpx;
+    font-weight: 500;
+  }
+  
+  .form-input, .form-textarea {
+    width: 100%;
+    padding: 24rpx;
+    border: 2rpx solid #e0e0e0;
+    border-radius: 12rpx;
+    font-size: 28rpx;
+    color: #333;
+    background: #f8f9fa;
+    box-sizing: border-box;
+  }
+  
+  .form-input:focus, .form-textarea:focus {
+    border-color: #dc143c;
+    background: white;
+  }
+  
+  .form-textarea {
+    height: 120rpx;
+    resize: none;
+  }
+  
+  /* 选择器样式 */
+  .picker-input {
+    padding: 24rpx;
+    border: 2rpx solid #e0e0e0;
+    border-radius: 12rpx;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .placeholder {
+    color: #999;
+  }
+  
+  .picker-arrow {
+    color: #999;
+    font-size: 24rpx;
+  }
+  
+  /* 时间段选择 */
+  .time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20rpx;
+  }
+  
+  .time-slot {
+    flex: 1;
+    min-width: 200rpx;
+    padding: 24rpx 20rpx;
+    border: 2rpx solid #e0e0e0;
+    border-radius: 12rpx;
+    text-align: center;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+  }
+  
+  .time-slot.active {
+    border-color: #dc143c;
+    background: #dc143c;
+    color: white;
+  }
+  
+  .slot-time {
+    display: block;
+    font-size: 26rpx;
+    font-weight: 500;
+    margin-bottom: 8rpx;
+  }
+  
+  .slot-status {
+    display: block;
+    font-size: 22rpx;
+    opacity: 0.8;
+  }
+  
+  /* 数量选择器 */
+  .number-selector {
+    display: flex;
+    align-items: center;
+    width: 200rpx;
+  }
+  
+  .number-btn {
+    width: 60rpx;
+    height: 60rpx;
+    border: 2rpx solid #dc143c;
+    border-radius: 8rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32rpx;
+    color: #dc143c;
+    background: white;
+    transition: all 0.3s ease;
+  }
+  
+  .number-btn:active {
+    background: #dc143c;
+    color: white;
+  }
+  
+  .number-btn.disabled {
+    border-color: #e0e0e0;
+    color: #ccc;
+    background: #f5f5f5;
+  }
+  
+  .number-value {
+    flex: 1;
+    text-align: center;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* 预约须知 */
+  .notice-section {
+    background: white;
+    border-radius: 20rpx;
+    padding: 40rpx 30rpx;
+    margin-bottom: 30rpx;
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  }
+  
+  .notice-title {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30rpx;
+    text-align: center;
+  }
+  
+  .notice-content {
+    color: #666;
+  }
+  
+  .notice-item {
+    font-size: 26rpx;
+    line-height: 1.6;
+    margin-bottom: 16rpx;
+    padding-left: 20rpx;
+  }
+  
+  /* 协议同意 */
+  .agreement-section {
+    background: white;
+    border-radius: 20rpx;
+    padding: 30rpx;
+    margin-bottom: 30rpx;
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  }
+  
+  .agreement-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .checkbox {
+    width: 40rpx;
+    height: 40rpx;
+    border: 2rpx solid #dc143c;
+    border-radius: 6rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16rpx;
+    font-size: 24rpx;
+    color: white;
+    background: white;
+  }
+  
+  .checkbox.checked {
+    background: #dc143c;
+  }
+  
+  .agreement-text {
+    font-size: 26rpx;
+    color: #666;
+    margin-right: 8rpx;
+  }
+  
+  .agreement-link {
+    font-size: 26rpx;
+    color: #dc143c;
+    text-decoration: underline;
+  }
+  
+  /* 提交按钮 */
+  .submit-section {
+    margin-bottom: 40rpx;
+  }
+  
+  .btn-submit {
+    width: 100%;
+    padding: 32rpx;
+    font-size: 32rpx;
+    border-radius: 50rpx;
+    background: linear-gradient(135deg, #dc143c, #ff4757);
+    color: white;
+    border: none;
+    box-shadow: 0 8rpx 25rpx rgba(220, 20, 60, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .btn-submit:active {
+    transform: translateY(2rpx);
+    box-shadow: 0 4rpx 15rpx rgba(220, 20, 60, 0.3);
+  }
+  
+  .btn-submit.disabled {
+    background: #ccc;
+    box-shadow: none;
+    transform: none;
+  }
+  
+  /* 预约记录 */
+  .my-bookings {
+    background: white;
+    border-radius: 20rpx;
+    padding: 40rpx 30rpx;
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  }
+  
+  .section-title {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30rpx;
+    text-align: center;
+  }
+  
+  .booking-record {
+    padding: 30rpx;
+    border: 2rpx solid #f0f0f0;
+    border-radius: 16rpx;
+    margin-bottom: 20rpx;
+    background: #f8f9fa;
+  }
+  
+  .record-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20rpx;
+  }
+  
+  .record-base {
+    font-size: 28rpx;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .record-status {
+    padding: 8rpx 16rpx;
+    border-radius: 20rpx;
+    font-size: 22rpx;
+    color: white;
+  }
+  
+  .status-confirmed {
+    background: #4CAF50;
+  }
+  
+  .status-pending {
+    background: #FF9800;
+  }
+  
+  .status-cancelled {
+    background: #F44336;
+  }
+  
+  .record-info {
+    margin-bottom: 20rpx;
+  }
+  
+  .record-date, .record-time, .record-count {
+    display: block;
+    font-size: 24rpx;
+    color: #666;
+    margin-bottom: 8rpx;
+  }
+  
+  .record-actions {
+    display: flex;
+    gap: 20rpx;
+  }
+  
+  .btn-secondary.small, .btn-primary.small {
+    flex: 1;
+    padding: 16rpx 24rpx;
+    font-size: 24rpx;
+    border-radius: 20rpx;
+  }
+  
+  .btn-secondary.small {
+    background: white;
+    color: #dc143c;
+    border: 2rpx solid #dc143c;
+  }
+  
+  .btn-primary.small {
+    background: #dc143c;
+    color: white;
+    border: none;
+  }

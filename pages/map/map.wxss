@@ -1,0 +1,116 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .map-header {
+    background: #dc143c;
+    color: white;
+    padding: 30rpx;
+    text-align: center;
+  }
+  
+  .map-title {
+    font-size: 36rpx;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8rpx;
+  }
+  
+  .map-subtitle {
+    font-size: 24rpx;
+    opacity: 0.9;
+  }
+  
+  .map-container {
+    flex: 1;
+  }
+  
+  .map-controls {
+    position: absolute;
+    right: 30rpx;
+    top: 150rpx;
+    display: flex;
+    flex-direction: column;
+    gap: 20rpx;
+  }
+  
+  .control-btn {
+    background: white;
+    border: none;
+    border-radius: 50rpx;
+    padding: 20rpx 30rpx;
+    font-size: 24rpx;
+    box-shadow: 0 4rpx 15rpx rgba(0,0,0,0.1);
+  }
+  
+  .base-info-card {
+    position: absolute;
+    bottom: 30rpx;
+    left: 30rpx;
+    right: 30rpx;
+    background: white;
+    border-radius: 15rpx;
+    padding: 24rpx;
+    box-shadow: 0 8rpx 25rpx rgba(0,0,0,0.15);
+  }
+  
+  .card-content {
+    display: flex;
+    margin-bottom: 20rpx;
+  }
+  
+  .card-image {
+    width: 120rpx;
+    height: 90rpx;
+    border-radius: 8rpx;
+    margin-right: 20rpx;
+  }
+  
+  .card-info {
+    flex: 1;
+  }
+  
+  .card-name {
+    font-size: 30rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8rpx;
+  }
+  
+  .card-location {
+    font-size: 24rpx;
+    color: #666;
+    margin-bottom: 8rpx;
+  }
+  
+  .card-price {
+    font-size: 26rpx;
+    color: #dc143c;
+    font-weight: bold;
+  }
+  
+  .card-actions {
+    display: flex;
+    gap: 20rpx;
+  }
+  
+  .card-btn {
+    flex: 1;
+    height: 70rpx;
+    border-radius: 35rpx;
+    font-size: 28rpx;
+    border: none;
+  }
+  
+  .card-btn.outline {
+    background: white;
+    border: 2rpx solid #dc143c;
+    color: #dc143c;
+  }
+  
+  .card-btn.primary {
+    background: #dc143c;
+    color: white;
+  }

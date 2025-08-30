@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="map-header">
+    <text class="map-title">红色基地地图</text>
+    <text class="map-subtitle">📍 发现身边的红色印记</text>
+  </view>
+  
+  <map id="redBaseMap" 
+       class="map-container"
+       latitude="39.9042"
+       longitude="116.4074"
+       scale="10"
+       show-location="true"
+       markers="{{markers}}"
+       bindmarkertap="onMarkerTap">
+  </map>
+  
+  <view class="map-controls">
+    <button class="control-btn" bindtap="onLocationTap">📍 定位</button>
+    <button class="control-btn" bindtap="onListTap">📋 列表</button>
+  </view>
+
+  <!-- 基地信息卡片 -->
+  <view class="base-info-card" wx:if="{{selectedBase}}">
+    <view class="card-content">
+      <image src="{{selectedBase.image}}" class="card-image" mode="aspectFill"></image>
+      <view class="card-info">
+        <view class="card-name">{{selectedBase.name}}</view>
+        <view class="card-location">{{selectedBase.address}}</view>
+        <view class="card-price">{{selectedBase.price === 0 ? '免费参观' : '¥' + selectedBase.price}}</view>
+      </view>
+    </view>
+    <view class="card-actions">
+      <button class="card-btn outline" bindtap="onNavigateTap">导航</button>
+      <button class="card-btn primary" bindtap="onDetailTap">详情</button>
+    </view>
+  </view>
+</view>

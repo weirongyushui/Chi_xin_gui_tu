@@ -1,0 +1,84 @@
+<view class="container">
+  <!-- 地图控件 -->
+  <map id="redBaseMap" 
+       class="map-container"
+       latitude="{{mapCenter.latitude}}"
+       longitude="{{mapCenter.longitude}}"
+       scale="{{mapScale}}"
+       markers="{{markers}}"
+       show-location="{{true}}"
+       bindmarkertap="onMarkerTap"
+       bindregionchange="onRegionChange">
+    
+    <!-- 地图控制按钮 -->
+    <view class="map-controls">
+      <view class="control-btn" bindtap="onLocationTap">
+        <image src="/images/location-center.png" class="control-icon"></image>
+      </view>
+      <view class="control-btn" bindtap="onListViewTap">
+        <image src="/images/list-view.png" class="control-icon"></image>
+      </view>
+    </view>
+  </map>
+
+  <!-- 底部基地信息卡片 -->
+  <view class="base-info-panel" wx:if="{{selectedBase}}">
+    <view class="panel-content">
+      <view class="base-summary">
+        <image src="{{selectedBase.image}}" class="summary-image" mode="aspectFill"></image>
+        <view class="summary-info">
+          <view class="summary-name">{{selectedBase.name}}</view>
+          <view class="summary-address">{{selectedBase.address}}</view>
+          <view class="summary-tags">
+            <text class="tag" wx:for="{{selectedBase.tags}}" wx:key="index">{{item}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="panel-actions">
+        <button class="action-btn outline" bindtap="onNavigateTap">导航</button>
+        <button class="action-btn primary" bindtap="onDetailTap">详情</button>
+      </view>
+    </view>
+    <view class="panel-close" bindtap="onClosePanelTap">
+      <image src="/images/close.png" class="close-icon"></image>
+    </view>
+  </view>
+
+  <!-- 筛选面板 -->
+  <view class="filter-panel">
+    <scroll-view class="filter-scroll" scroll-x="true" show-scrollbar="false">
+      <view class="filter-list">
+        <view class="filter-item {{filterType === 'all' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="all">
+          全部
+        </view>
+        <view class="filter-item {{filterType === 'nearby' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="nearby">
+          附近
+        </view>
+        <view class="filter-item {{filterType === 'museum' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="museum">
+          博物馆
+        </view>
+        <view class="filter-item {{filterType === 'memorial' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="memorial">
+          纪念馆
+        </view>
+        <view class="filter-item {{filterType === 'residence' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="residence">
+          故居
+        </view>
+        <view class="filter-item {{filterType === 'site' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="site">
+          旧址
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
